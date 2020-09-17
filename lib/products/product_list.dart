@@ -67,6 +67,7 @@ class _ProductListState extends State<ProductList> {
                       backImg: model.shopImage,),
                     Container(
                       height: 50.0,
+                      width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                         color: Colors.white,
                       ),
@@ -94,9 +95,7 @@ class _ProductListState extends State<ProductList> {
                                       .lightBlue : Colors.black26),),
                             ),
                           ),
-                          SizedBox(
-                            width: 200.0,
-                          ),
+
                           GestureDetector(
                             onTap: () {
                               setState(() {
@@ -119,9 +118,7 @@ class _ProductListState extends State<ProductList> {
                                       .lightBlue : Colors.black26),),
                             ),
                           ),
-                          SizedBox(
-                            width: 200.0,
-                          ),
+
                           GestureDetector(
                             onTap: () {
                               setState(() {

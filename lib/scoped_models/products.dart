@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:mallshop/models/shop.dart';
 import 'package:path/path.dart';
 import 'package:mallshop/models/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,29 +11,24 @@ import 'connected_models.dart';
 class ProductModel extends ConnectedModels {
   bool isFinished = false;
   StorageUploadTask uploadTask;
+
+
+
   Future<List<Product>> fetchProducts() async {
     userProducts.clear();
     specialProducts.clear();
     isLoading = true;
     try {
-      var docs = await Firestore.instance.collection('shop').getDocuments();
-      if (docs.documents.isNotEmpty) {
-        final SharedPreferences pref = await SharedPreferences.getInstance();
-        final String userID = pref.getString('user_id');
 
-        var doc = docs.documents
-            .where((sh) => sh.data['user_id'] == userID)
-            .toList();
-        print("authenticatedUserauthenticatedUserauthenticatedUser ${userID}");
-        var Id = doc[0].documentID;
-        shopName = doc[0].data['shop_name'];
-        shopCategory=doc[0].data['category']['name'];
-        shopId = Id;
+      Shop shop=await getAuthenticatedShop();
+      shopName = shop.shopName;
+        shopCategory=shop.shopCategory;
+        shopId = shop.Id;
         var products =
             await Firestore.instance.collection('product').getDocuments();
 
         var product = products.documents
-            .where((sh) => sh.data['shop']['id'] == Id)
+            .where((sh) => sh.data['shop']['id'] == shopId)
             .toList();
 
         for (var i = 0; i < product.length; i++) {
@@ -66,7 +62,7 @@ class ProductModel extends ConnectedModels {
         notifyListeners();
 
 
-      }
+
       return userProducts;
     } catch (error) {
       isLoading = false;
@@ -143,6 +139,28 @@ class ProductModel extends ConnectedModels {
         return e.toString();
       }
     }
+
+  }
+  Future updateShopDetailInfo(Shop shop) async {
+    Shop shopp=await getAuthenticatedShop();
+    try {
+        await Firestore.instance.collection('product')
+            .document(shopp.Id)
+            .updateData({
+          'phone': shop.shopPhone,
+          'shop_website': shop.shopWebsite,
+          'shop_telegram': shop.shopTelegram,
+          'description': shop.shopDescription,
+          'updated_at': new DateTime.now()
+        });
+        notifyListeners();
+        return true;
+      }
+      catch (e) {
+        notifyListeners();
+        return e.toString();
+      }
+
 
   }
 
