@@ -21,9 +21,12 @@ class ProductModel extends ConnectedModels {
     try {
 
       Shop shop=await getAuthenticatedShop();
-      shopName = shop.shopName;
-        shopCategory=shop.shopCategory;
+
+      if(shop!=null) {
+        shopName = shop.shopName;
+        shopCategory = shop.shopCategory;
         shopId = shop.Id;
+      }
         var products =
             await Firestore.instance.collection('product').getDocuments();
 
@@ -144,7 +147,7 @@ class ProductModel extends ConnectedModels {
   Future updateShopDetailInfo(Shop shop) async {
     Shop shopp=await getAuthenticatedShop();
     try {
-        await Firestore.instance.collection('product')
+        await Firestore.instance.collection('shop')
             .document(shopp.Id)
             .updateData({
           'phone': shop.shopPhone,
@@ -152,17 +155,18 @@ class ProductModel extends ConnectedModels {
           'shop_telegram': shop.shopTelegram,
           'description': shop.shopDescription,
           'updated_at': new DateTime.now()
-        });
+        }).whenComplete((getAuthenticatedShop));
         notifyListeners();
         return true;
       }
       catch (e) {
+      print("updateupdate ${e.toString()}");
         notifyListeners();
         return e.toString();
       }
 
-
   }
+
 
   Future<Null> deleteProduct(Product prod) async {
     Firestore.instance.collection('product').document(prod.Id).updateData({

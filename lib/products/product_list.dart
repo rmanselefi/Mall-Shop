@@ -4,6 +4,7 @@ import 'package:mallshop/products/product_form.dart';
 import 'package:mallshop/products/shopdetail_card.dart';
 import 'package:mallshop/products/top.dart';
 import 'package:mallshop/scoped_models/main.dart';
+import 'package:mallshop/setting/add_details.dart';
 import 'package:mallshop/shared/ShopMode.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:responsive_grid/responsive_grid.dart';
@@ -219,11 +220,7 @@ class _ProductListState extends State<ProductList> {
                             );
                           }
                           else {
-                            return Container(
-                              child: Center(
-                                child: Text('Add Detail'),
-                              ),
-                            );
+                            return AddDetail();
                           }
                         })
                   ],

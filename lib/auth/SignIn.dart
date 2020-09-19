@@ -108,7 +108,7 @@ class _SignInState extends State<SignIn>  {
                 child: ListView(
                   padding: const EdgeInsets.all(0.0),
                   children: <Widget>[
-                    SizedBox(height: 260.0,),
+                    SizedBox(height: MediaQuery.of(context).size.height/2,),
                     Column(
                       children: <Widget>[
                         Container(

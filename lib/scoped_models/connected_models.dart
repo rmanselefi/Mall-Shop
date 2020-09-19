@@ -11,6 +11,7 @@ class ConnectedModels extends Model{
   User authenticatedUser;
   List<Product> userProducts=[];
   List<Product> specialProducts=[];
+   Shop shop;
   var shopName='';
   var shopId='';
   var shopImage='';
@@ -29,11 +30,17 @@ class ConnectedModels extends Model{
               .where((sh) => sh.data['user_id'] == userID)
               .toList();
           var data = doc[0].data;
-          final Shop shop = Shop(
+
+           shop = Shop(
             Id: doc[0].documentID,
             shopName:data.containsKey('shop_name') ? data['shop_name'] : '',
-            shopCategory: data.containsKey('category')?data['category']:'',
+            shopCategory: data.containsKey('category')?data['category']['name']:'',
+            shopPhone: data.containsKey('phone')?data['phone']:'',
+             shopWebsite: data.containsKey('shop_website')?data['shop_website']:'',
+             shopTelegram: data.containsKey('shop_telegram')?data['shop_telegram']:'',
+             shopDescription: data.containsKey('description')?data['description']:''
           );
+
           return shop;
         }
       }

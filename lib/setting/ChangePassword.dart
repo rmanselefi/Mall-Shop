@@ -7,36 +7,46 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _ChangePasswordState extends State<ChangePassword> {
-  String password='';
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomPadding: true,
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text('Change Password'),
-        backgroundColor: Color(0xff2a2e42),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: ExactAssetImage('assets/background.png'),
-                fit: BoxFit.fill,
-              alignment:Alignment.topCenter,
-            )
-        ),
-        padding: EdgeInsets.all(10.0),
-        child: Stack(
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomPadding: true,
+        resizeToAvoidBottomInset: true,
+        body: Stack(
           children: <Widget>[
-            Column(
+            ListView(
+              shrinkWrap: true,
               children: <Widget>[
-                SizedBox(
-                  height: 260.0,
-                ),
+                Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: ExactAssetImage('assets/background.png'),
+                          fit: BoxFit.fill,
 
-                PasswordForm()
+                      )
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height/2,
+                      ),
+                      PasswordForm()
+                    ],
+                  ),
+                ),
               ],
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                icon: Icon(Icons.arrow_back,color: Color(0xff29b6f6),),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                color: Colors.white,
+              ),
             ),
           ],
         ),

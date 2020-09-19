@@ -75,70 +75,132 @@ class _AddDetailState extends State<AddDetail> {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
-      return SingleChildScrollView(
-          child: Container(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                Text(
-                'Update your settings',
-                style: TextStyle(fontSize: 18.0),
-              ),
-                SizedBox(
-                  height: 20.0,
+          var shopp=model.shop;
+      return Expanded(
+        child: ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(20.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                  Text(
+                  'Add Details',
+                  style: TextStyle(
+                      fontSize: 18.0,
+                    color: Colors.white
+                  ),
                 ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Phone Number'),
-                  validator: (val) =>
-                  val.isEmpty ? 'Please Enter a name' : null,
-                  onSaved: (val) {
-                    setState(() {
-                      _formData.shopPhone = val;
-                    });
-                  },
-                ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
                   TextFormField(
-                    decoration: InputDecoration(labelText: 'Website'),
-                    validator: (val) =>
-                    val.isEmpty ? 'Please Enter a website url' : null,
+                    initialValue: shopp.shopPhone,
+                    style: TextStyle(
+                      color: Colors.white
+                    ),
+                    decoration: InputDecoration(
+                        labelText: 'Phone Number',
+                        labelStyle: TextStyle(color:Colors.white),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 1.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 1.0),
+                      ),
+                    ),
                     onSaved: (val) {
                       setState(() {
                         _formData.shopPhone = val;
                       });
                     },
                   ),
-                SizedBox(
-                  height: 20.0,
-                ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    TextFormField(
+                      style: TextStyle(
+                          color: Colors.white
+                      ),
+                      initialValue: shopp.shopWebsite,
+                      decoration: InputDecoration(
+                          labelText: 'Website',
+                          labelStyle: TextStyle(color:Colors.white),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white, width: 1.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white, width: 1.0),
+                        ),
+                      ),
+                      onSaved: (val) {
+                        setState(() {
+                          _formData.shopWebsite = val;
+                        });
+                      },
+                    ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
                   TextFormField(
-                    decoration: InputDecoration(labelText: 'Telegram Link'),
-                    validator: (val) =>
-                    val.isEmpty ? 'Please Enter Telegram Link' : null,
+                    style: TextStyle(
+                        color: Colors.white
+                    ),
+                    initialValue: shopp.shopTelegram,
+                    decoration: InputDecoration(
+                        labelText: 'Telegram Link',
+                        labelStyle: TextStyle(color:Colors.white),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 1.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 1.0),
+                      ),
+                    ),
                     onSaved: (val) {
                       setState(() {
-                        _formData.shopPhone = val;
+                        _formData.shopTelegram = val;
                       });
                     },
                   ),
                   SizedBox(
                     height: 20.0,
                   ),
-                TextFormField(
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  decoration: InputDecoration(labelText: 'Description'),
-                  onSaved: (val) {
-                    setState(() {
-                      _formData.shopDescription = val;
-                    });
-                  },
+                  TextFormField(
+                    style: TextStyle(
+                        color: Colors.white
+                    ),
+                    initialValue: shopp.shopDescription,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                        labelText: 'Description',
+                        labelStyle: TextStyle(color:Colors.white),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 1.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 1.0),
+                      ),
+                    ),
+                    onSaved: (val) {
+                      setState(() {
+                        _formData.shopDescription = val;
+                      });
+                    },
+                  ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    _buildSubmitButton()
+                  ]
                 ),
-                  _buildSubmitButton()
-                ]
               ),
             ),
-          )
+          ],
+        ),
       );
     });
   }

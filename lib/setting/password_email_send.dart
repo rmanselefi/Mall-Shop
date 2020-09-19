@@ -33,7 +33,7 @@ class _PasswordEmailSendState extends State<PasswordEmailSend> {
             ListView(
               padding: const EdgeInsets.all(0.0),
               children:<Widget>[
-                SizedBox(height: 250.0,),
+                SizedBox(height: MediaQuery.of(context).size.height/2,),
 //                Container(
 //                  child: Center(
 //                    child:Text('Send Reset Email',style: TextStyle(
@@ -54,7 +54,16 @@ class _PasswordEmailSendState extends State<PasswordEmailSend> {
                             style: TextStyle(
                               color: Colors.white,
                             ),
-                            decoration: InputDecoration(labelText: 'Enter your Email',fillColor: Colors.white,labelStyle: TextStyle(
+                            decoration: InputDecoration(
+                                labelText: 'Enter your Email',
+                                fillColor: Colors.white,
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                ),
+                                labelStyle: TextStyle(
                                 color:Colors.white
                             )),
                             keyboardType: TextInputType.emailAddress,
