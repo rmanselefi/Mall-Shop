@@ -15,8 +15,11 @@ class ConnectedModels extends Model{
   var shopName='';
   var shopId='';
   var shopImage='';
+  var shopCredit='';
+  Shop shopCr;
   var shopCategory='';
   var password='';
+  var remaining;
 
   Future<Shop> getAuthenticatedShop() async {
     try{

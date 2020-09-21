@@ -37,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     _model.autoAuthenticate();
     _model.getShopBackGround(_model.shopId);
+    _model.getShopCredit(_model.shopId);
   }
   @override
   Widget build(BuildContext context) {

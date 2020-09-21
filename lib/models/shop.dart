@@ -6,5 +6,7 @@ class Shop{
   String shopDescription;
   String shopWebsite;
   String shopTelegram;
-  Shop({this.Id,this.shopTelegram,this.shopDescription,this.shopPhone,this.shopWebsite,this.shopName,this.shopCategory});
+  String shopCredit;
+  DateTime creditedDate;
+  Shop({this.Id,this.shopTelegram,this.shopDescription,this.shopPhone,this.shopWebsite,this.shopName,this.shopCategory,this.shopCredit,this.creditedDate});
 }

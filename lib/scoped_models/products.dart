@@ -197,6 +197,58 @@ class ProductModel extends ConnectedModels {
     }
   }
 
+  Future<Shop> getShopCredit(String id) async {
+    try {
+      var docs = await Firestore.instance.collection('shop').getDocuments();
+      if (docs.documents.isNotEmpty) {
+        var doc = docs.documents.where((d) => d.documentID == id).toList();
+        if (doc.isNotEmpty) {
+          var docdata = doc[0].data;
+          shopCr=Shop(
+            creditedDate: docdata.containsKey('credited_at') ? docdata['credited_at'].toDate() : null,
+            shopCredit: docdata.containsKey('remaining_time') ? docdata['remaining_time'] : ''
+          );
+          shopCredit =
+          docdata.containsKey('remaining_time') ? docdata['remaining_time'] : '';
+          var credit=int.parse(shopCredit);
+          final creditedAt = docdata.containsKey('credited_at') ? docdata['credited_at'].toDate() : null;
+          final date2 = DateTime.now();
+          final difference = creditedAt.difference(date2).inDays;
+          remaining=credit-difference;
+          notifyListeners();
+        }
+      }
+      return shopCr;
+    } catch (err) {
+      print("errorcredit $err");
+      return err;
+    }
+  }
+  Future<int> getRemaining(String id) async {
+    try {
+      var docs = await Firestore.instance.collection('shop').getDocuments();
+      if (docs.documents.isNotEmpty) {
+        var doc = docs.documents.where((d) => d.documentID == id).toList();
+        if (doc.isNotEmpty) {
+          var docdata = doc[0].data;
+          shopCredit =
+          docdata.containsKey('remaining_time') ? docdata['remaining_time'] : '';
+          var credit=int.parse(shopCredit);
+          final creditedAt = docdata.containsKey('credited_at') ? docdata['credited_at'].toDate() : null;
+          final date2 = DateTime.now();
+          final difference = creditedAt.difference(date2).inDays;
+          remaining=credit-difference;
+          notifyListeners();
+        }
+      }
+      return remaining;
+    } catch (err) {
+      print("errorremaining $err");
+      return err;
+    }
+
+  }
+
   Future<String> uploadBackImage(File back, {String path}) async {
     // final mimetypeData = lookupMimeType(image.path).split('/');
     String fileName = basename(back.path);
