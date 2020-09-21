@@ -25,6 +25,12 @@ class _RemainingCreditState extends State<RemainingCredit> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,color: Color(0xff29b6f6).withOpacity(0.9),),
+          onPressed: (){
+            Navigator.of(context).pop();
+          },
+        ),
         title: Text('Credit'),
         backgroundColor:  Color(0xff2a2e42),
       ),
