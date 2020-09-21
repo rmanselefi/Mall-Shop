@@ -26,6 +26,7 @@ class _RemainingCreditState extends State<RemainingCredit> {
     return  Scaffold(
       appBar: AppBar(
         title: Text('Credit'),
+        backgroundColor:  Color(0xff2a2e42),
       ),
       body: ScopedModelDescendant<MainModel>(
           builder:  (BuildContext context, Widget child, MainModel model)  {
@@ -49,20 +50,35 @@ class _RemainingCreditState extends State<RemainingCredit> {
                   final date2 = DateTime.now();
                   final difference = creditedAt.difference(date2).inDays;
                   var remaining=credit-difference;
-                  return Column(
-                    children: <Widget>[
-                      Container(
-                        child: Text('Remaining time'),
-                      ),
-                      Container(
-                        child: Center(
-                          child: Text('${remaining.toString()} Days',style: TextStyle(
-                            color: Colors.black45,
-                            fontSize: 100.0
-                          ),),
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xff2a2e42)
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(height: 200.0,),
+                        Container(
+                          child: Text('Remaining time',style: TextStyle(color:Colors.grey),),
                         ),
-                      ),
-                    ],
+                        Container(
+                          child: Center(
+                            child: RichText(
+                              text: TextSpan(
+                                text:'${remaining.toString()}',
+                              style: TextStyle(color: Colors.white,fontSize: 100.0),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: 'Days', style: TextStyle(color: Colors.grey, fontSize: 18)
+                                  )
+                                ]
+                            ),
+
+                            )
+
+                          ),
+                        ),
+                      ],
+                    ),
                   );
                 }
 
