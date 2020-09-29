@@ -42,6 +42,7 @@ class _ChangeBackgroundState extends State<ChangeBackground> {
 
   Future getImage(BuildContext context, ImageSource source) async {
     File image = await ImagePicker.pickImage(source: source, maxWidth: 400.0);
+    print("imageimageimageimage$image");
     setState(() {
       _image = image;
     });
@@ -76,7 +77,7 @@ class _ChangeBackgroundState extends State<ChangeBackground> {
                   ),
                 );
               }
-
+              model.uploadTask=null;
               return MaterialButton(
                   height: 30.0,
                   minWidth: 50.0,
@@ -100,6 +101,7 @@ class _ChangeBackgroundState extends State<ChangeBackground> {
                   onPressed: () async {
                     widget.model.updateShopBack(widget.id, _image);
                     if(model.uploadTask.isComplete){
+
                       return Fluttertoast.showToast(
                           msg: "Your Background Image is changed Succesfully",
                           toastLength: Toast.LENGTH_LONG,
@@ -109,6 +111,7 @@ class _ChangeBackgroundState extends State<ChangeBackground> {
                           textColor: Colors.white,
                           fontSize: 16.0
                       );
+
                     }
                     else{
                       return Container();
@@ -140,11 +143,24 @@ class _ChangeBackgroundState extends State<ChangeBackground> {
                                 alignment: Alignment.centerLeft,
                                 margin: new EdgeInsets.only(
                                     top: 0.0, bottom: 25.0, left: 0.0),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.add,
-                                    size: 50.0,
-                                  ),
+                                child: Stack(
+                                  children: <Widget>[
+                                    Center(
+                                      child: Icon(
+                                        Icons.add,
+                                        size: 50.0,
+                                      ),
+                                    ),
+                                    _image != null
+                                        ? Image.file(
+                                      _image,
+                                      fit: BoxFit.fill,
+                                      height: 500.0,
+                                      width: MediaQuery.of(context).size.width,
+                                      alignment: Alignment.topCenter,
+                                    )
+                                        : Container(),
+                                  ],
                                 ) ));
                       }
                     return new Card(

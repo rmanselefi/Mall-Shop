@@ -13,6 +13,7 @@ class AuthModel extends ConnectedModels {
       FirebaseUser user = (await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: email, password: password))
           .user;
+print('useruseruseruseruser $user');
       var token = await user.getIdToken();
 
       var id = user.uid;
@@ -68,10 +69,20 @@ class AuthModel extends ConnectedModels {
 
   void logout() async {
     isLoading = false;
-    authenticatedUser = null;
-    final SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.remove('token');
-    pref.remove('email');
-    pref.remove('user_id');
+    FirebaseAuth.instance.signOut().then((res) async{
+      authenticatedUser = null;
+      userProducts.clear();
+      specialProducts.clear();
+      shopName = '';
+      shopCategory = '';
+      shopId = '';
+      print("resresresresres");
+      final SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.remove('token');
+      pref.remove('email');
+      pref.remove('user_id');
+      pref.remove('password');
+    });
+
   }
 }

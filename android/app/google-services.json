@@ -1,71 +1,34 @@
 {
   "project_info": {
-    "project_number": "541484687877",
-    "firebase_url": "https://mall-68b64.firebaseio.com",
-    "project_id": "mall-68b64",
-    "storage_bucket": "mall-68b64.appspot.com"
+    "project_number": "863928589315",
+    "firebase_url": "https://mallet-e0596.firebaseio.com",
+    "project_id": "mallet-e0596",
+    "storage_bucket": "mallet-e0596.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:541484687877:android:b3b6b3bd942b47e631b26c",
-        "android_client_info": {
-          "package_name": "com.example.mall_shops"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "541484687877-o9t27ss1mibjd4q99b7bptaqi95h4cno.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBeFlxeoC3R4Kqg3bY5PjIhHYHBQ1F9mMk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "541484687877-o9t27ss1mibjd4q99b7bptaqi95h4cno.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:541484687877:android:6c6da08a750c74b331b26c",
+        "mobilesdk_app_id": "1:863928589315:android:d4e9101940c8e785384236",
         "android_client_info": {
           "package_name": "com.example.mall_users"
         }
       },
       "oauth_client": [
         {
-          "client_id": "541484687877-6rlf10ejp7tv6fg1k39batnvafbq22e6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.mall_users",
-            "certificate_hash": "ba5d30c66cbd28bd10cab1035b5bdc786dcb81e7"
-          }
-        },
-        {
-          "client_id": "541484687877-o9t27ss1mibjd4q99b7bptaqi95h4cno.apps.googleusercontent.com",
+          "client_id": "863928589315-ekv59pcsdnf7t2q5ud6r3t6raguss27v.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBeFlxeoC3R4Kqg3bY5PjIhHYHBQ1F9mMk"
+          "current_key": "AIzaSyBlRZaOtRDCHvAuMKMNVvV3Cz9Ay7u9nvQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "541484687877-o9t27ss1mibjd4q99b7bptaqi95h4cno.apps.googleusercontent.com",
+              "client_id": "863928589315-ekv59pcsdnf7t2q5ud6r3t6raguss27v.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -74,27 +37,27 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:541484687877:android:1e1a435476da0cea31b26c",
+        "mobilesdk_app_id": "1:863928589315:android:ebb358fe56a6891b384236",
         "android_client_info": {
           "package_name": "com.example.mallshop"
         }
       },
       "oauth_client": [
         {
-          "client_id": "541484687877-o9t27ss1mibjd4q99b7bptaqi95h4cno.apps.googleusercontent.com",
+          "client_id": "863928589315-ekv59pcsdnf7t2q5ud6r3t6raguss27v.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBeFlxeoC3R4Kqg3bY5PjIhHYHBQ1F9mMk"
+          "current_key": "AIzaSyBlRZaOtRDCHvAuMKMNVvV3Cz9Ay7u9nvQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "541484687877-o9t27ss1mibjd4q99b7bptaqi95h4cno.apps.googleusercontent.com",
+              "client_id": "863928589315-ekv59pcsdnf7t2q5ud6r3t6raguss27v.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

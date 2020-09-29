@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mallshop/products/drawer.dart';
+import 'package:mallshop/widgets/drawer.dart';
 import 'package:mallshop/products/product_list.dart';
 import 'package:mallshop/scoped_models/main.dart';
 import 'package:scoped_model/scoped_model.dart';

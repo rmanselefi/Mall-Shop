@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mallshop/remaining_credit.dart';
+import 'package:mallshop/widgets/remaining_credit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:mallshop/contact_us.dart';
+import 'package:mallshop/widgets/contact_us.dart';
 import 'package:mallshop/setting/ChangeBackground.dart';
 import 'package:mallshop/auth/SignIn.dart';
 import 'package:mallshop/scoped_models/main.dart';
@@ -69,7 +69,7 @@ class _DrawerCustomState extends State<DrawerCustom> {
                 ScopedModelDescendant<MainModel>(builder:
                     (BuildContext context, Widget child, MainModel model) {
                   return ListTile(
-                    trailing: model.remaining<=10?Text(model.remaining.toString(),style: TextStyle(color: Colors.red),):Text(""),
+                    trailing: model.remaining!=null&& model.remaining<=10?Text(model.remaining.toString(),style: TextStyle(color: Colors.red),):Text(""),
                     leading: Icon(Icons.credit_card,
                         color: Color(0xff29b6f6).withOpacity(0.9)),
                     title: Text(

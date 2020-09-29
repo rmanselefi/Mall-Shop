@@ -70,7 +70,7 @@ class _ShopDetailCardState extends State<ShopDetailCard> {
             child: CircularProgressIndicator(),
           ),
         ),
-        errorWidget: (context, url, error) => Image.asset('assets/add.png'),
+        errorWidget: (context, url, error) => Image.asset('assets/icon-addon.png'),
       ),
 //      child: Container(
 //        height: double.infinity,

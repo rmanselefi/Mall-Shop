@@ -28,23 +28,34 @@ class ConnectedModels extends Model{
         final SharedPreferences pref = await SharedPreferences.getInstance();
         if(pref.containsKey('user_id')) {
           final String userID = pref.getString('user_id');
+          if(userID!=null) {
+            var doc = docs.documents
+                .where((sh) => sh.data['user_id'] == userID)
+                .toList();
+            var data = doc[0].data;
 
-          var doc = docs.documents
-              .where((sh) => sh.data['user_id'] == userID)
-              .toList();
-          var data = doc[0].data;
+            shop = Shop(
+                Id: doc[0].documentID,
+                shopName: data.containsKey('shop_name')
+                    ? data['shop_name']
+                    : '',
+                shopCategory: data.containsKey('category')
+                    ? data['category']['name']
+                    : '',
+                shopPhone: data.containsKey('phone') ? data['phone'] : '',
+                shopWebsite: data.containsKey('shop_website')
+                    ? data['shop_website']
+                    : '',
+                shopTelegram: data.containsKey('shop_telegram')
+                    ? data['shop_telegram']
+                    : '',
+                shopDescription: data.containsKey('description')
+                    ? data['description']
+                    : ''
+            );
 
-           shop = Shop(
-            Id: doc[0].documentID,
-            shopName:data.containsKey('shop_name') ? data['shop_name'] : '',
-            shopCategory: data.containsKey('category')?data['category']['name']:'',
-            shopPhone: data.containsKey('phone')?data['phone']:'',
-             shopWebsite: data.containsKey('shop_website')?data['shop_website']:'',
-             shopTelegram: data.containsKey('shop_telegram')?data['shop_telegram']:'',
-             shopDescription: data.containsKey('description')?data['description']:''
-          );
-
-          return shop;
+            return shop;
+          }
         }
       }
     }

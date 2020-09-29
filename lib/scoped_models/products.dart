@@ -29,7 +29,7 @@ class ProductModel extends ConnectedModels {
       }
         var products =
             await Firestore.instance.collection('product').getDocuments();
-
+      if(shopId!='') {
         var product = products.documents
             .where((sh) => sh.data['shop']['id'] == shopId)
             .toList();
@@ -39,9 +39,9 @@ class ProductModel extends ConnectedModels {
           final Product prod = Product(
               Id: product[i].documentID,
               cardPlace:
-                  data.containsKey('card_place') ? data['card_place'] : '',
+              data.containsKey('card_place') ? data['card_place'] : '',
               productName:
-                  data.containsKey('product_name') ? data['product_name'] : '',
+              data.containsKey('product_name') ? data['product_name'] : '',
               productPrice: data.containsKey('product_price')
                   ? data['product_price']
                   : '',
@@ -49,21 +49,20 @@ class ProductModel extends ConnectedModels {
                   ? data['product_description']
                   : '',
               productImage: data.containsKey('image') ? data['image'] : '',
-            isNormal:  data.containsKey('isNormal') ? data['isNormal'] : '',
-            contact: data.containsKey('contact')?data['contact']:''
+              isNormal: data.containsKey('isNormal') ? data['isNormal'] : '',
+              contact: data.containsKey('contact') ? data['contact'] : ''
           );
-          var isNormal=data.containsKey('isNormal') ? data['isNormal'] : '';
-          if(isNormal){
+          var isNormal = data.containsKey('isNormal') ? data['isNormal'] : '';
+          if (isNormal) {
             userProducts.add(prod);
           }
-          else{
+          else {
             specialProducts.add(prod);
           }
-
         }
         isLoading = false;
         notifyListeners();
-
+      }
 
 
       return userProducts;
@@ -90,6 +89,7 @@ class ProductModel extends ConnectedModels {
       // Here, every StorageTaskEvent concerning the upload is printed to the logs.
       print('EVENT ${event.type}');
     });
+
     notifyListeners();
 
 // Cancel your subscription when done.
@@ -221,7 +221,7 @@ class ProductModel extends ConnectedModels {
       return shopCr;
     } catch (err) {
       print("errorcredit $err");
-      return err;
+//      return err;
     }
   }
   Future<int> getRemaining(String id) async {
