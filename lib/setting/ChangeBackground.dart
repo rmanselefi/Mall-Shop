@@ -71,13 +71,10 @@ class _ChangeBackgroundState extends State<ChangeBackground> {
               if(model.uploadTask.isInProgress){
                 return Container(
                   child: Center(
-                    child: CircularProgressIndicator(
-
-                    ),
+                    child: CircularProgressIndicator(),
                   ),
                 );
               }
-              model.uploadTask=null;
               return MaterialButton(
                   height: 30.0,
                   minWidth: 50.0,

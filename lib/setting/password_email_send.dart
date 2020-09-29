@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class PasswordEmailSend extends StatefulWidget {
   @override
@@ -95,8 +97,30 @@ class _PasswordEmailSendState extends State<PasswordEmailSend> {
                                 await FirebaseAuth.instance.sendPasswordResetEmail(email: email).then((res){
                                   _displaySnackBar(context);
                                   Navigator.of(context).pop();
-                                }).catchError((error){
-                                  print('errorerror $error');
+                                }).catchError((Object error){
+                                  if(error is PlatformException){
+                                    Fluttertoast.showToast(
+                                        msg: error.message.toString(),
+                                        toastLength: Toast.LENGTH_LONG,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0
+                                    );
+                                  }
+                                  else{
+                                    Fluttertoast.showToast(
+                                        msg: error.toString(),
+                                        toastLength: Toast.LENGTH_LONG,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0
+                                    );
+                                  }
+
                                 });
                               }
 
