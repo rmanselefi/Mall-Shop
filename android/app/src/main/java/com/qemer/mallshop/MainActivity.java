@@ -1,4 +1,4 @@
-package com.example.mallshop;
+package com.qemer.mallshop;
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity;

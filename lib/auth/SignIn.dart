@@ -86,31 +86,29 @@ class _SignInState extends State<SignIn>  {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      resizeToAvoidBottomPadding: true,
-      body: ModalProgressHUD(
-        inAsyncCall: _saving,
-        child: Container(
-//          constraints: BoxConstraints.expand(),
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: ExactAssetImage('assets/background.png'),
-              fit: BoxFit.fill,
-              alignment:Alignment.topCenter,
-            ),
-          ),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.all(0.0),
-                  children: <Widget>[
-                    SizedBox(height: MediaQuery.of(context).size.height/2,),
-                    Column(
+    return SafeArea(
+      child: Scaffold(
+//        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomPadding: true,
+        body: ModalProgressHUD(
+          inAsyncCall: _saving,
+          child: Stack(
+            children: [
+              ListView(
+                shrinkWrap: true,
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: ExactAssetImage('assets/background.jpg'),
+                        fit: BoxFit.fill,
+                        alignment:Alignment.topCenter,
+                      ),
+                    ),
+                    child: Column(
                       children: <Widget>[
+                        SizedBox(height: 60.0),
                         Container(
                          padding: const EdgeInsets.all(20.0),
                          child: new Form(
@@ -170,17 +168,6 @@ class _SignInState extends State<SignIn>  {
                                              color: Colors.red
                                          )
                                      )
-//                                 focusedBorder: OutlineInputBorder(
-//                                   borderSide: BorderSide(
-//                                     color: Colors.white,
-//                                   ),
-//                                 ),
-//                                 enabledBorder: OutlineInputBorder(
-//                                   borderSide: BorderSide(
-//                                     color: Colors.white,
-//                                     width: 1.0,
-//                                   ),
-//                                 ),
                                  ),
                                  obscureText: true,
                                  validator: (val) {
@@ -204,8 +191,8 @@ class _SignInState extends State<SignIn>  {
                         ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),

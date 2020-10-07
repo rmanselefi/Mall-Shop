@@ -57,8 +57,8 @@ class _ShopDetailCardState extends State<ShopDetailCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
+                price!=''?Text("$price ETB", style: TextStyle(color: Colors.white),):Text(''),
                 Text(name, style: TextStyle(color: Colors.white),),
-                price!=''?Text("$price ETB", style: TextStyle(color: Colors.white),):Text('')
               ],
             ),
           ),

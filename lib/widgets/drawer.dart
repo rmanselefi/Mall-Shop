@@ -7,6 +7,8 @@ import 'package:mallshop/setting/ChangeBackground.dart';
 import 'package:mallshop/auth/SignIn.dart';
 import 'package:mallshop/scoped_models/main.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:share/share.dart';
+
 
 class DrawerCustom extends StatefulWidget {
   final MainModel model;
@@ -100,9 +102,10 @@ class _DrawerCustomState extends State<DrawerCustom> {
                 ListTile(
                   leading: Icon(Icons.share,
                       color: Color(0xff29b6f6).withOpacity(0.9)),
-                  title:
-                      Text('Share App', style: TextStyle(color: Colors.white)),
-                  onTap: () {},
+                  title: Text('Share App', style: TextStyle(color: Colors.white)),
+                  onTap: () {
+                    Share.share('https://play.google.com/apps/internaltest/4698340689481495352');
+                  },
                 ),
                 ListTile(
                   leading: Icon(Icons.send,

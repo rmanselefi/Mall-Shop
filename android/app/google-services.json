@@ -63,6 +63,64 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863928589315:android:e91cba98fe3fdf6b384236",
+        "android_client_info": {
+          "package_name": "com.qemer.mall_users"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863928589315-ekv59pcsdnf7t2q5ud6r3t6raguss27v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlRZaOtRDCHvAuMKMNVvV3Cz9Ay7u9nvQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863928589315-ekv59pcsdnf7t2q5ud6r3t6raguss27v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863928589315:android:9e9c17b51b23ee05384236",
+        "android_client_info": {
+          "package_name": "com.qemer.mallshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863928589315-ekv59pcsdnf7t2q5ud6r3t6raguss27v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlRZaOtRDCHvAuMKMNVvV3Cz9Ay7u9nvQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863928589315-ekv59pcsdnf7t2q5ud6r3t6raguss27v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
