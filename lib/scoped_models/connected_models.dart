@@ -46,9 +46,6 @@ class ConnectedModels extends Model{
                 shopWebsite: data.containsKey('shop_website')
                     ? data['shop_website']
                     : '',
-                shopTelegram: data.containsKey('shop_telegram')
-                    ? data['shop_telegram']
-                    : '',
                 shopDescription: data.containsKey('description')
                     ? data['description']
                     : ''

@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:mallshop/scoped_models/main.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ShopDetailTop extends StatefulWidget {
   final String shopName;
   final String backImg;
   final MainModel model;
-  ShopDetailTop({this.shopName,this.backImg,this.model});
+
+  ShopDetailTop({this.shopName, this.backImg, this.model});
+
   @override
   _ShopDetailTopState createState() => _ShopDetailTopState();
 }
@@ -18,16 +20,32 @@ class _ShopDetailTopState extends State<ShopDetailTop> {
   Widget build(BuildContext context) {
     var name = widget.shopName;
     return Stack(children: <Widget>[
-      Container(
-        height: 200.0,
-        width: double.infinity,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: widget.backImg != ''
-                    ? NetworkImage(widget.backImg)
-                    : AssetImage('assets/back.jpg'),
-                fit: BoxFit.fill)),
-      ),
+      CachedNetworkImage(
+          imageUrl: widget.backImg,
+          imageBuilder: (context, imageProvider) => Container(
+                height: 200.0,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: imageProvider, fit: BoxFit.fill)),
+              ),
+          placeholder: (context, url) => Container(
+                height: 60,
+                width: 60,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+          errorWidget: (context, url, error) {
+            return Container(
+              padding: EdgeInsets.all(10),
+              width: 100.0,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  image: DecorationImage(
+                      fit: BoxFit.fill, image: AssetImage('assets/back.jpg'))),
+            );
+          }),
       Container(
         height: 200.0,
         width: double.infinity,
@@ -47,26 +65,24 @@ class _ShopDetailTopState extends State<ShopDetailTop> {
           ),
         ),
       ),
-    ScopedModelDescendant<MainModel>(
+      ScopedModelDescendant<MainModel>(
           builder: (BuildContext context, Widget child, MainModel model) {
-            if(model.uploadTask!=null){
-            return StreamBuilder<StorageTaskEvent>(
-            stream: model.uploadTask.events,
-            builder: (_, snapshot) {
-              var event = snapshot?.data?.snapshot;
-              double progressPercent = event != null
-              ? event.bytesTransferred / event.totalByteCount
-                  : 0;
-              if(model.uploadTask.isInProgress){
-                return Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                  child: CircularProgressIndicator(
-                  ),
-                )
-                );
-              }
-              if(model.uploadTask.isComplete){
+        if (model.uploadTask != null) {
+          return StreamBuilder<StorageTaskEvent>(
+              stream: model.uploadTask.events,
+              builder: (_, snapshot) {
+                var event = snapshot?.data?.snapshot;
+                double progressPercent = event != null
+                    ? event.bytesTransferred / event.totalByteCount
+                    : 0;
+                if (model.uploadTask.isInProgress) {
+                  return Align(
+                      alignment: Alignment.topRight,
+                      child: Container(
+                        child: CircularProgressIndicator(),
+                      ));
+                }
+                if (model.uploadTask.isComplete) {
 //                return Alert(
 //                  context: context,
 //                  type: AlertType.success,
@@ -101,30 +117,30 @@ class _ShopDetailTopState extends State<ShopDetailTop> {
 //                    );
 //                  },
 //                );
-              }
-              return Container();
-            }
-            );
-            }else{
-              return Container();
-            }
-          }),
+                }
+                return Container();
+              });
+        } else {
+          return Container();
+        }
+      }),
       Align(
         alignment: Alignment.topLeft,
         child: IconButton(
-          icon: Icon(Icons.menu,color: Color(0xff29b6f6),),
+          icon: Icon(
+            Icons.menu,
+            color: Color(0xff29b6f6),
+          ),
           onPressed: () {
-            if(Scaffold.of(context).isDrawerOpen){
+            if (Scaffold.of(context).isDrawerOpen) {
               Scaffold.of(context).openDrawer();
-            }else{
+            } else {
               Scaffold.of(context).openDrawer();
             }
-
           },
           color: Colors.white,
         ),
       ),
-
     ]);
   }
 }

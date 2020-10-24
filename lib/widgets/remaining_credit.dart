@@ -54,7 +54,7 @@ class _RemainingCreditState extends State<RemainingCredit> {
                   var credit=int.parse(snap.data.shopCredit);
                   final creditedAt = snap.data.creditedDate;
                   final date2 = DateTime.now();
-                  final difference = creditedAt.difference(date2).inDays;
+                  final difference = date2.difference(creditedAt).inDays;
                   var remaining=credit-difference;
                   return Container(
                     decoration: BoxDecoration(

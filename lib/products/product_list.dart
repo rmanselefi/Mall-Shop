@@ -31,15 +31,15 @@ class _ProductListState extends State<ProductList> {
     widget.model.getShopBackGround(widget.id);
   }
 
-  void _showSettingsPanel(String Id, String image, String price, String name,
-      String description, String contact) {
+  void _showSettingsPanel(String Id, String image, String price, String name,String description) {
     showModalBottomSheet(
-        isScrollControlled: true,
         context: context,
+        elevation: 10.0,
+        isScrollControlled: true,
         builder: (context) {
           return Container(
               padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-              child: ProductForm(Id, name, price, image, description, contact));
+              child: ProductForm(Id, name, price, image, description));
         });
   }
 
@@ -137,8 +137,9 @@ class _ProductListState extends State<ProductList> {
                                           : BorderSide(
                                           width: 2, color: Colors.white))
                               ),
-                              child: Text(model.shopCategory == 'Cloth' ||
-                                  model.shopCategory == 'Jewelery'
+                              child: Text(model.shopCategory == 'Furniture' ||
+                                  model.shopCategory == 'Cloths/Apparel' || model.shopCategory == 'Stationary' ||
+                                  model.shopCategory == 'Materials' || model.shopCategory=='Electronics'
                                   ? 'BIG SELL'
                                   : 'Special', style: TextStyle(
                                   color: _mode == ShopeMode.BigSell ? Colors
@@ -173,7 +174,6 @@ class _ProductListState extends State<ProductList> {
                                               f.productPrice,
                                               f.productName,
                                               f.productDescription,
-                                              f.contact,
                                             );
                                           },
                                           child: ShopDetailCard(
@@ -205,8 +205,7 @@ class _ProductListState extends State<ProductList> {
                                                 f.productImage,
                                                 f.productPrice,
                                                 f.productName,
-                                                f.productDescription,
-                                                f.contact
+                                                f.productDescription
                                             );
                                           },
                                           child: ShopDetailCard(

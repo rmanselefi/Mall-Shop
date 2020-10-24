@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:mallshop/models/product.dart';
+import 'package:mallshop/shared/image.dart';
 import 'package:mallshop/widgets/remaining_credit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -8,7 +12,8 @@ import 'package:mallshop/auth/SignIn.dart';
 import 'package:mallshop/scoped_models/main.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:share/share.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class DrawerCustom extends StatefulWidget {
   final MainModel model;
@@ -28,12 +33,113 @@ class _DrawerCustomState extends State<DrawerCustom> {
       throw 'Could not launch $url';
     }
   }
-@override
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     widget.model.getShopCredit(widget.model.shopId);
   }
+
+  File _image;
+
+  void _setImage(File image) {
+    _image = image;
+    print("_formData_formData_formData$_image");
+  }
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String imageMessage = '';
+
+  void _showSettingsPanel() {
+    showModalBottomSheet(
+        elevation: 10.0,
+        context: context,
+        builder: (context) {
+          return Container(
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+              child: ListView(
+                children: [
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Text(
+                    'Update your background image',
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                  ImageInput(_setImage),
+                  Text(
+                    imageMessage,
+                    style: TextStyle(color: Colors.red),
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  ScopedModelDescendant<MainModel>(builder:
+                      (BuildContext context, Widget child, MainModel model) {
+                    if (model.uploadBackTask != null) {
+                      return StreamBuilder<StorageTaskEvent>(
+                          stream: model.uploadBackTask.events,
+                          builder: (_, snapshot) {
+                            if (model.uploadBackTask.isInProgress) {
+                              return Center(child: CircularProgressIndicator());
+                            } else if (model.uploadBackTask.isComplete) {
+                              return Container();
+                            } else {
+                              return Container();
+                            }
+                          });
+                    }
+                    return Container();
+                  }),
+                  MaterialButton(
+                    height: 40.0,
+                    minWidth: 300.0,
+                    child: Text('Update'),
+                    color: Colors.pink[400],
+                    onPressed: () async {
+                      print("_image_image_image_image $_image");
+                      if (_image == null) {
+                        Fluttertoast.showToast(
+                            msg:
+                            "Please select an image,Image is required",
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                      } else if (_image != null) {
+                        var res = await widget.model
+                            .updateShopBack(widget.model.shopId, _image);
+                        if (res != true) {
+                          Fluttertoast.showToast(
+                              msg: "Something is wrong",
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                        } else {
+                          await widget.model.getShopBackGround(widget.model.shopId);
+                          Fluttertoast.showToast(
+                              msg:"Your Background Image is updated Succesfully",
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.green,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                        }
+                      }
+                    },
+                  ),
+                ],
+              ));
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -71,7 +177,12 @@ class _DrawerCustomState extends State<DrawerCustom> {
                 ScopedModelDescendant<MainModel>(builder:
                     (BuildContext context, Widget child, MainModel model) {
                   return ListTile(
-                    trailing: model.remaining!=null&& model.remaining<=10?Text(model.remaining.toString(),style: TextStyle(color: Colors.red),):Text(""),
+                    trailing: model.remaining != null && model.remaining <= 10
+                        ? Text(
+                            model.remaining.toString(),
+                            style: TextStyle(color: Colors.red),
+                          )
+                        : Text(""),
                     leading: Icon(Icons.credit_card,
                         color: Color(0xff29b6f6).withOpacity(0.9)),
                     title: Text(
@@ -102,9 +213,11 @@ class _DrawerCustomState extends State<DrawerCustom> {
                 ListTile(
                   leading: Icon(Icons.share,
                       color: Color(0xff29b6f6).withOpacity(0.9)),
-                  title: Text('Share App', style: TextStyle(color: Colors.white)),
+                  title:
+                      Text('Share App', style: TextStyle(color: Colors.white)),
                   onTap: () {
-                    Share.share('https://play.google.com/apps/internaltest/4698340689481495352');
+                    Share.share(
+                        'https://play.google.com/apps/internaltest/4698340689481495352');
                   },
                 ),
                 ListTile(
@@ -146,12 +259,13 @@ class _DrawerCustomState extends State<DrawerCustom> {
                       style: TextStyle(color: Colors.white)),
                   onTap: () {
 //                  Navigator.pushNamed(context, '/changeImage');
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChangeBackground(
-                              widget.model, widget.model.shopId)),
-                    );
+//                    Navigator.push(
+//                      context,
+//                      MaterialPageRoute(
+//                          builder: (context) => ChangeBackground(
+//                              widget.model, widget.model.shopId)),
+//                    );
+                    _showSettingsPanel();
                   },
                 ),
                 Divider(

@@ -12,27 +12,28 @@ class _ChangePasswordState extends State<ChangePassword> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomPadding: true,
-        resizeToAvoidBottomInset: true,
+//        resizeToAvoidBottomInset: true,
         body: Stack(
           children: <Widget>[
             ListView(
               shrinkWrap: true,
               children: <Widget>[
                 Container(
+                  height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: ExactAssetImage('assets/background.png'),
+                          image: ExactAssetImage('assets/background.jpg'),
                           fit: BoxFit.fill,
+                        alignment:Alignment.topCenter,
 
                       )
                   ),
-                  padding: EdgeInsets.symmetric(vertical: 10.0),
+//                  padding: EdgeInsets.symmetric(vertical: 10.0),
                   child: Column(
                     children: <Widget>[
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height/2,
-                      ),
-                      PasswordForm()
+                      SizedBox(height: 60.0),
+                      PasswordForm(),
+
                     ],
                   ),
                 ),

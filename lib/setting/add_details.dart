@@ -13,7 +13,6 @@ class _AddDetailState extends State<AddDetail> {
   final Shop _formData= Shop(
     shopPhone: '',
     shopDescription: '',
-    shopTelegram: '',
     shopWebsite: ''
   );
   Widget _buildSubmitButton() {
@@ -141,30 +140,6 @@ class _AddDetailState extends State<AddDetail> {
                         });
                       },
                     ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  TextFormField(
-                    style: TextStyle(
-                        color: Colors.white
-                    ),
-                    initialValue: shopp.shopTelegram,
-                    decoration: InputDecoration(
-                        labelText: 'Telegram Link',
-                        labelStyle: TextStyle(color:Colors.white),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white, width: 1.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white, width: 1.0),
-                      ),
-                    ),
-                    onSaved: (val) {
-                      setState(() {
-                        _formData.shopTelegram = val;
-                      });
-                    },
-                  ),
                   SizedBox(
                     height: 20.0,
                   ),

@@ -90,7 +90,7 @@ class _ImageInputState extends State<ImageInput> {
             : Image.file(
           _image,
           fit: BoxFit.cover,
-          height: 300.0,
+          height: 200.0,
           width: MediaQuery.of(context).size.width,
           alignment: Alignment.topCenter,
         )

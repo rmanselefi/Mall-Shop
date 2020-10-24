@@ -12,11 +12,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 class ProductForm extends StatefulWidget {
   final id;
   final  name;
-  final contact;
+
   final  price;
   final  image;
   final description;
-  ProductForm(this.id,this.name,this.price,this.image,this.description,this.contact);
+  ProductForm(this.id,this.name,this.price,this.image,this.description);
   @override
   _ProductFormState createState() => _ProductFormState();
 }
@@ -31,7 +31,6 @@ class _ProductFormState extends State<ProductForm> {
       productPrice: '',
       productImage: '',
       productDescription: '',
-      contact: '',
       file: null
   );
   void _setImage(File image) {
@@ -70,6 +69,7 @@ class _ProductFormState extends State<ProductForm> {
                   TextFormField(
                     initialValue: widget.name,
                     decoration: InputDecoration(labelText: 'Product/Service Name'),
+                    textInputAction: TextInputAction.next,
                     validator: (val) =>
                     val.isEmpty ? 'Please Enter a name' : null,
                     onSaved: (val) {
@@ -84,6 +84,7 @@ class _ProductFormState extends State<ProductForm> {
                   TextFormField(
                     initialValue: widget.price,
                     decoration: InputDecoration(labelText: 'Price'),
+                    textInputAction: TextInputAction.next,
                     onSaved: (val) {
                       setState(() {
                         _formData.productPrice = val;
@@ -94,6 +95,7 @@ class _ProductFormState extends State<ProductForm> {
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     initialValue: widget.description,
+                    textInputAction: TextInputAction.done,
                     decoration: InputDecoration(labelText: 'Description'),
                     onSaved: (val) {
                       setState(() {
@@ -101,15 +103,7 @@ class _ProductFormState extends State<ProductForm> {
                       });
                     },
                   ),
-                  TextFormField(
-                    initialValue: widget.contact,
-                    decoration: InputDecoration(labelText: 'Contact'),
-                    onSaved: (val) {
-                      setState(() {
-                        _formData.contact = val;
-                      });
-                    },
-                  ),
+
                   ImageInput(_setImage),
                   Text(imageMessage,style: TextStyle(color:Colors.red),),
                   SizedBox(height: 5.0,),
@@ -126,6 +120,7 @@ class _ProductFormState extends State<ProductForm> {
                               Navigator.pop(context);
                               var res =await model.updateProduct(_formData);
                               if (res is String) {
+                                await model.fetchProducts();
                                 Fluttertoast.showToast(
                                     msg: "Something is wrong",
                                     toastLength: Toast.LENGTH_LONG,

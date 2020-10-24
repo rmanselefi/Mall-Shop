@@ -8,9 +8,9 @@ class Product{
   String productImage;
   String productDescription;
   String backgroundImage;
-  String contact;
+
   bool isNormal;
   File file;
-  Product({this.isNormal,this.productPrice,this.productName,this.productImage,this.Id,this.cardPlace,this.file,this.contact,this.productDescription,this.backgroundImage});
+  Product({this.isNormal,this.productPrice,this.productName,this.productImage,this.Id,this.cardPlace,this.file,this.productDescription,this.backgroundImage});
 
 }

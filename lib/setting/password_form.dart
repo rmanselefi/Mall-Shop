@@ -30,6 +30,7 @@ class _PasswordFormState extends State<PasswordForm> {
                       child: Column(
                         children: <Widget>[
                           TextFormField(
+                            textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
                                 labelText: 'Enter your old password',
                                 fillColor: Colors.white,
@@ -58,6 +59,7 @@ class _PasswordFormState extends State<PasswordForm> {
                             height: 10.0,
                           ),
                           TextFormField(
+                            textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
                                 labelText: 'Enter your new password',
                                 fillColor: Colors.white,
@@ -86,6 +88,7 @@ class _PasswordFormState extends State<PasswordForm> {
                             height: 10.0,
                           ),
                           TextFormField(
+                            textInputAction: TextInputAction.done,
                             decoration: InputDecoration(
                                 labelText: 'Confirm password',
                                 fillColor: Colors.white,

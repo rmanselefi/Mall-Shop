@@ -11,6 +11,9 @@ import 'connected_models.dart';
 class ProductModel extends ConnectedModels {
   bool isFinished = false;
   StorageUploadTask uploadTask;
+  StorageUploadTask uploadBackTask;
+
+  double progress;
 
 
 
@@ -50,7 +53,6 @@ class ProductModel extends ConnectedModels {
                   : '',
               productImage: data.containsKey('image') ? data['image'] : '',
               isNormal: data.containsKey('isNormal') ? data['isNormal'] : '',
-              contact: data.containsKey('contact') ? data['contact'] : ''
           );
           var isNormal = data.containsKey('isNormal') ? data['isNormal'] : '';
           if (isNormal) {
@@ -108,14 +110,13 @@ class ProductModel extends ConnectedModels {
         }
       });
       try {
-      await Firestore.instance.collection('product').document(prod.Id).updateData({
+      Firestore.instance.collection('product').document(prod.Id).updateData({
         'product_name': prod.productName,
         'product_price': prod.productPrice,
         'product_description':prod.productDescription,
         'image': prod.productImage,
-        'contact':prod.contact,
         'updated_at': new DateTime.now()
-      });
+      }).whenComplete((fetchProducts));
       notifyListeners();
       return true;
       }
@@ -131,7 +132,6 @@ class ProductModel extends ConnectedModels {
           'product_name': prod.productName,
           'product_price': prod.productPrice,
           'product_description': prod.productDescription,
-          'contact': prod.contact,
           'updated_at': new DateTime.now()
         });
         notifyListeners();
@@ -152,7 +152,6 @@ class ProductModel extends ConnectedModels {
             .updateData({
           'phone': shop.shopPhone,
           'shop_website': shop.shopWebsite,
-          'shop_telegram': shop.shopTelegram,
           'description': shop.shopDescription,
           'updated_at': new DateTime.now()
         }).whenComplete((getAuthenticatedShop));
@@ -255,28 +254,31 @@ class ProductModel extends ConnectedModels {
     final StorageReference storageReference =
         FirebaseStorage().ref().child("background_images/$fileName");
 
-     uploadTask = storageReference.putFile(back);
+    uploadBackTask = storageReference.putFile(back);
 
     final StreamSubscription<StorageTaskEvent> streamSubscription =
-        uploadTask.events.listen((event) {
+    uploadBackTask.events.listen((event) {
       // You can use this to notify yourself or your user in any kind of way.
       // For example: you could use the uploadTask.events stream in a StreamBuilder instead
       // to show your user what the current status is. In that case, you would not need to cancel any
       // subscription as StreamBuilder handles this automatically.
 
       // Here, every StorageTaskEvent concerning the upload is printed to the logs.
+      progress = event.snapshot.bytesTransferred.toDouble() /
+          event.snapshot.totalByteCount.toDouble();
+      notifyListeners();
       print('EVENT ${event.type}');
     });
 
 // Cancel your subscription when done.
-    notifyListeners();
-    var up = await uploadTask.onComplete;
+    var up = await uploadBackTask.onComplete;
     var imageUrl = await up.ref.getDownloadURL();
     streamSubscription.cancel();
+    notifyListeners();
     return imageUrl;
   }
 
-  Future<Null> updateShopBack(String id, File file) async {
+  Future<bool> updateShopBack(String id, File file) async {
     var backImage = '';
     try {
       if (file != null) {
@@ -290,9 +292,12 @@ class ProductModel extends ConnectedModels {
           'back_image': backImage,
           'updated_at': new DateTime.now()
         }).whenComplete((fetchProducts));
+        return true;
       }
+      return false;
     } catch (err) {
       print("errorerrorerrorerrorerrorerror $err");
+      return false;
     }
   }
 }
