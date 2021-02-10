@@ -25,8 +25,8 @@ class DrawerCustom extends StatefulWidget {
 }
 
 class _DrawerCustomState extends State<DrawerCustom> {
-  _launchURL() async {
-    const url = 'https://t.me/No_one47';
+  _launchURL(var url) async {
+//    const url = 'https://t.me/No_one47';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -75,23 +75,23 @@ class _DrawerCustomState extends State<DrawerCustom> {
                   SizedBox(
                     height: 30.0,
                   ),
-                  ScopedModelDescendant<MainModel>(builder:
-                      (BuildContext context, Widget child, MainModel model) {
-                    if (model.uploadBackTask != null) {
-                      return StreamBuilder<StorageTaskEvent>(
-                          stream: model.uploadBackTask.events,
-                          builder: (_, snapshot) {
-                            if (model.uploadBackTask.isInProgress) {
-                              return Center(child: CircularProgressIndicator());
-                            } else if (model.uploadBackTask.isComplete) {
-                              return Container();
-                            } else {
-                              return Container();
-                            }
-                          });
-                    }
-                    return Container();
-                  }),
+//                  ScopedModelDescendant<MainModel>(builder:
+//                      (BuildContext context, Widget child, MainModel model) {
+//                    if (model.uploadBackTask != null) {
+//                      return StreamBuilder<StorageTaskEvent>(
+//                          stream: model.uploadBackTask.events,
+//                          builder: (_, snapshot) {
+//                            if (model.uploadBackTask.isInProgress) {
+//                              return Center(child: CircularProgressIndicator());
+//                            } else if (model.uploadBackTask.isComplete) {
+//                              return Container();
+//                            } else {
+//                              return Container();
+//                            }
+//                          });
+//                    }
+//                    return Container();
+//                  }),
                   MaterialButton(
                     height: 40.0,
                     minWidth: 300.0,
@@ -110,8 +110,10 @@ class _DrawerCustomState extends State<DrawerCustom> {
                             textColor: Colors.white,
                             fontSize: 16.0);
                       } else if (_image != null) {
+                        Navigator.pop(context);
                         var res = await widget.model
                             .updateShopBack(widget.model.shopId, _image);
+
                         if (res != true) {
                           Fluttertoast.showToast(
                               msg: "Something is wrong",
@@ -178,10 +180,20 @@ class _DrawerCustomState extends State<DrawerCustom> {
                     (BuildContext context, Widget child, MainModel model) {
                   return ListTile(
                     trailing: model.remaining != null && model.remaining <= 10
-                        ? Text(
-                            model.remaining.toString(),
-                            style: TextStyle(color: Colors.red),
-                          )
+                        ? Container(
+                      padding:EdgeInsets.all(5.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(200),
+                        ),
+                        color: Colors.red,
+                      ),
+                          child: Text(
+                              model.remaining<=0?'0':model.remaining.toString(),
+                              style: TextStyle(color: Colors.white),
+                            ),
+                        )
                         : Text(""),
                     leading: Icon(Icons.credit_card,
                         color: Color(0xff29b6f6).withOpacity(0.9)),
@@ -204,10 +216,7 @@ class _DrawerCustomState extends State<DrawerCustom> {
                       color: Color(0xff29b6f6).withOpacity(0.9)),
                   title: Text('Rate Us', style: TextStyle(color: Colors.white)),
                   onTap: () {
-//                Navigator.pushReplacement(
-//                  context,
-//                  MaterialPageRoute(builder: (context) => PhoneAuth()),
-//                );
+                    _launchURL("https://play.google.com/store/apps/details?id=com.qemer.mallshop");
                   },
                 ),
                 ListTile(
@@ -217,7 +226,16 @@ class _DrawerCustomState extends State<DrawerCustom> {
                       Text('Share App', style: TextStyle(color: Colors.white)),
                   onTap: () {
                     Share.share(
-                        'https://play.google.com/apps/internaltest/4698340689481495352');
+                        'https://play.google.com/store/apps/details?id=com.qemer.mallshop');
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.people,
+                      color: Color(0xff29b6f6).withOpacity(0.9)),
+                  title: Text('Join Us',
+                      style: TextStyle(color: Colors.white)),
+                  onTap: () {
+                    _launchURL("https://t.me/MallEtClients");
                   },
                 ),
                 ListTile(
@@ -226,7 +244,7 @@ class _DrawerCustomState extends State<DrawerCustom> {
                   title: Text('Quick Support',
                       style: TextStyle(color: Colors.white)),
                   onTap: () {
-                    _launchURL();
+                    _launchURL("https://t.me/MallETclientSupport");
                   },
                 ),
                 ListTile(
@@ -234,10 +252,7 @@ class _DrawerCustomState extends State<DrawerCustom> {
                       color: Color(0xff29b6f6).withOpacity(0.9)),
                   title: Text('Update', style: TextStyle(color: Colors.white)),
                   onTap: () {
-//                Navigator.pushReplacement(
-//                  context,
-//                  MaterialPageRoute(builder: (context) => PhoneAuth()),
-//                );
+                    _launchURL("https://play.google.com/store/apps/details?id=com.qemer.mallshop");
                   },
                 ),
                 Divider(

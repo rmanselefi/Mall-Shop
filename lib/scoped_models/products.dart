@@ -31,16 +31,16 @@ class ProductModel extends ConnectedModels {
         shopId = shop.Id;
       }
         var products =
-            await Firestore.instance.collection('product').getDocuments();
+            await FirebaseFirestore.instance.collection('product').get();
       if(shopId!='') {
-        var product = products.documents
-            .where((sh) => sh.data['shop']['id'] == shopId)
+        var product = products.docs
+            .where((sh) => sh.data()['shop']['id'] == shopId)
             .toList();
 
         for (var i = 0; i < product.length; i++) {
-          var data = product[i].data;
+          var data = product[i].data();
           final Product prod = Product(
-              Id: product[i].documentID,
+              Id: product[i].id,
               cardPlace:
               data.containsKey('card_place') ? data['card_place'] : '',
               productName:
@@ -103,6 +103,9 @@ class ProductModel extends ConnectedModels {
 
   Future updateProduct(Product prod) async {
     if (prod.file != null) {
+      if(prod.productImage!=''){
+        await deleteImage(prod.productImage);
+      }
       await uploadImage(prod).then((res) {
         print('imageuriimageuriimageuri$res');
         if (res != null) {
@@ -110,7 +113,8 @@ class ProductModel extends ConnectedModels {
         }
       });
       try {
-      Firestore.instance.collection('product').document(prod.Id).updateData({
+
+        FirebaseFirestore.instance.collection('product').doc(prod.Id).update({
         'product_name': prod.productName,
         'product_price': prod.productPrice,
         'product_description':prod.productDescription,
@@ -126,9 +130,9 @@ class ProductModel extends ConnectedModels {
       }
     } else {
       try {
-        await Firestore.instance.collection('product')
-            .document(prod.Id)
-            .updateData({
+        await FirebaseFirestore.instance.collection('product')
+            .doc(prod.Id)
+            .update({
           'product_name': prod.productName,
           'product_price': prod.productPrice,
           'product_description': prod.productDescription,
@@ -147,9 +151,9 @@ class ProductModel extends ConnectedModels {
   Future updateShopDetailInfo(Shop shop) async {
     Shop shopp=await getAuthenticatedShop();
     try {
-        await Firestore.instance.collection('shop')
-            .document(shopp.Id)
-            .updateData({
+        await FirebaseFirestore.instance.collection('shop')
+            .doc(shopp.Id)
+            .update({
           'phone': shop.shopPhone,
           'shop_website': shop.shopWebsite,
           'description': shop.shopDescription,
@@ -168,7 +172,7 @@ class ProductModel extends ConnectedModels {
 
 
   Future<Null> deleteProduct(Product prod) async {
-    Firestore.instance.collection('product').document(prod.Id).updateData({
+    FirebaseFirestore.instance.collection('product').doc(prod.Id).update({
       'product_name': '',
       'product_price': '',
       'product_description':'',
@@ -180,11 +184,11 @@ class ProductModel extends ConnectedModels {
   }
   Future<String> getShopBackGround(String id) async {
     try {
-      var docs = await Firestore.instance.collection('shop').getDocuments();
-      if (docs.documents.isNotEmpty) {
-        var doc = docs.documents.where((d) => d.documentID == id).toList();
+      var docs = await FirebaseFirestore.instance.collection('shop').get();
+      if (docs.docs.isNotEmpty) {
+        var doc = docs.docs.where((d) => d.id == id).toList();
         if (doc.isNotEmpty) {
-          var docdata = doc[0].data;
+          var docdata = doc[0].data();
           shopImage =
               docdata.containsKey('back_image') ? docdata['back_image'] : '';
         }
@@ -198,11 +202,11 @@ class ProductModel extends ConnectedModels {
 
   Future<Shop> getShopCredit(String id) async {
     try {
-      var docs = await Firestore.instance.collection('shop').getDocuments();
-      if (docs.documents.isNotEmpty) {
-        var doc = docs.documents.where((d) => d.documentID == id).toList();
+      var docs = await FirebaseFirestore.instance.collection('shop').get();
+      if (docs.docs.isNotEmpty) {
+        var doc = docs.docs.where((d) => d.id == id).toList();
         if (doc.isNotEmpty) {
-          var docdata = doc[0].data;
+          var docdata = doc[0].data();
           shopCr=Shop(
             creditedDate: docdata.containsKey('credited_at') ? docdata['credited_at'].toDate() : null,
             shopCredit: docdata.containsKey('remaining_time') ? docdata['remaining_time'] : ''
@@ -212,7 +216,7 @@ class ProductModel extends ConnectedModels {
           var credit=int.parse(shopCredit);
           final creditedAt = docdata.containsKey('credited_at') ? docdata['credited_at'].toDate() : null;
           final date2 = DateTime.now();
-          final difference = creditedAt.difference(date2).inDays;
+          final difference = date2.difference(creditedAt).inDays;
           remaining=credit-difference;
           notifyListeners();
         }
@@ -225,11 +229,11 @@ class ProductModel extends ConnectedModels {
   }
   Future<int> getRemaining(String id) async {
     try {
-      var docs = await Firestore.instance.collection('shop').getDocuments();
-      if (docs.documents.isNotEmpty) {
-        var doc = docs.documents.where((d) => d.documentID == id).toList();
+      var docs = await FirebaseFirestore.instance.collection('shop').get();
+      if (docs.docs.isNotEmpty) {
+        var doc = docs.docs.where((d) => d.id == id).toList();
         if (doc.isNotEmpty) {
-          var docdata = doc[0].data;
+          var docdata = doc[0].data();
           shopCredit =
           docdata.containsKey('remaining_time') ? docdata['remaining_time'] : '';
           var credit=int.parse(shopCredit);
@@ -282,13 +286,18 @@ class ProductModel extends ConnectedModels {
     var backImage = '';
     try {
       if (file != null) {
+        var back=await getShopBackGround(id);
+        if(back!=null){
+          await deleteImage(back);
+        }
         await uploadBackImage(file).then((res) {
           print('imageuriimageuriimageuri$res');
           if (res != null) {
             backImage = res;
           }
         });
-        Firestore.instance.collection('shop').document(id).updateData({
+
+        FirebaseFirestore.instance.collection('shop').doc(id).update({
           'back_image': backImage,
           'updated_at': new DateTime.now()
         }).whenComplete((fetchProducts));
@@ -299,5 +308,18 @@ class ProductModel extends ConnectedModels {
       print("errorerrorerrorerrorerrorerror $err");
       return false;
     }
+  }
+}
+
+Future deleteImage(String url) async {
+  try{
+    if (url != null) {
+      StorageReference photoRef =
+          await FirebaseStorage.instance.getReferenceFromUrl(url);
+      await photoRef.delete();
+    }
+  }
+  catch(e){
+
   }
 }

@@ -3,6 +3,8 @@ import 'package:mallshop/widgets/drawer.dart';
 import 'package:mallshop/products/product_list.dart';
 import 'package:mallshop/scoped_models/main.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
+
 
 class ProductPage extends StatefulWidget {
   final MainModel model;
@@ -29,19 +31,22 @@ class _ProductPageState extends State<ProductPage> {
 //          ),
           drawer: DrawerCustom(widget.model),
           resizeToAvoidBottomPadding: true,
-          body: ScopedModelDescendant<MainModel>(
-              builder: (BuildContext context, Widget child, MainModel model) {
-                return Container(
-                  decoration: BoxDecoration(
-                      color: Color(0xff2a2e42)
-                  ),
-                  child: model.userProducts.length == 0 && model.isLoading == true
-                      ? Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : ProductList(widget.model,widget.model.shopId),
-                );
-              })),
+          body: ConnectivityWidgetWrapper(
+            message: 'Connecting......',
+            child: ScopedModelDescendant<MainModel>(
+                builder: (BuildContext context, Widget child, MainModel model) {
+                  return Container(
+                    decoration: BoxDecoration(
+                        color: Color(0xff2a2e42)
+                    ),
+                    child: model.userProducts.length == 0 && model.isLoading == true
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : ProductList(widget.model,widget.model.shopId),
+                  );
+                }),
+          )),
       );
   }
 }

@@ -5,6 +5,7 @@ import 'package:mallshop/scoped_models/main.dart';
 import 'package:mallshop/setting/password_email_send.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 
 
 class SignIn extends StatefulWidget {
@@ -14,7 +15,7 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn>  {
   bool _saving = false;
-  final _formData = User(email: '', password: '');
+  final _formData = UserModel(email: '', password: '');
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   void initState() {
@@ -90,47 +91,50 @@ class _SignInState extends State<SignIn>  {
       child: Scaffold(
 //        resizeToAvoidBottomInset: true,
         resizeToAvoidBottomPadding: true,
-        body: ModalProgressHUD(
-          inAsyncCall: _saving,
-          child: Stack(
-            children: [
-              ListView(
-                shrinkWrap: true,
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: ExactAssetImage('assets/background.jpg'),
-                        fit: BoxFit.fill,
-                        alignment:Alignment.topCenter,
+        body: ConnectivityWidgetWrapper(
+          disableInteraction: true,
+          message: 'Connecting......',
+          child: ModalProgressHUD(
+            inAsyncCall: _saving,
+            child: Stack(
+              children: [
+                ListView(
+                  shrinkWrap: true,
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: ExactAssetImage('assets/background.jpg'),
+                          fit: BoxFit.fill,
+                          alignment:Alignment.topCenter,
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(height: 60.0),
-                        Container(
-                         padding: const EdgeInsets.all(20.0),
-                         child: new Form(
-                           key: _formKey,
-                           child: new Column(
-                             mainAxisAlignment: MainAxisAlignment.start,
-                             children: <Widget>[
-                               new TextFormField(
-                                 style: TextStyle(
-                                   color: Colors.white,
-                                 ),
-                                 decoration: new InputDecoration(
-                                     labelText: "Enter Email",
-                                     fillColor: Colors.white,
-                                     labelStyle: TextStyle(
-                                        color:Colors.white
-                                      ),
-                                     border: new UnderlineInputBorder(
-                                         borderSide: new BorderSide(
-                                             color: Colors.red
-                                         )
-                                     )
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(height: 60.0),
+                          Container(
+                           padding: const EdgeInsets.all(20.0),
+                           child: new Form(
+                             key: _formKey,
+                             child: new Column(
+                               mainAxisAlignment: MainAxisAlignment.start,
+                               children: <Widget>[
+                                 new TextFormField(
+                                   style: TextStyle(
+                                     color: Colors.white,
+                                   ),
+                                   decoration: new InputDecoration(
+                                       labelText: "Enter Email",
+                                       fillColor: Colors.white,
+                                       labelStyle: TextStyle(
+                                          color:Colors.white
+                                        ),
+                                       border: new UnderlineInputBorder(
+                                           borderSide: new BorderSide(
+                                               color: Colors.red
+                                           )
+                                       )
 //                                 focusedBorder: OutlineInputBorder(
 //                                   borderSide: BorderSide()
 //                                 ),
@@ -141,60 +145,61 @@ class _SignInState extends State<SignIn>  {
 //                                     width: 1.0,
 //                                   ),
 //                                 ),
-                                 ),
-                                 keyboardType: TextInputType.emailAddress,
-                                 validator: (val) {
-                                   if(val.isEmpty){
-                                    return 'Please Enter Email';
-                                   }
-                                 },
-                                 onSaved: (String value) {
-                                   _formData.email = value;
-                                 },
-                               ),
-                               SizedBox(height: 10.0,),
-                               new TextFormField(
-                                 style: TextStyle(
-                                   color: Colors.white,
-                                 ),
-                                 decoration: new InputDecoration(
-                                   labelText: "Enter Password",
-                                   fillColor: Colors.white,
-                                   labelStyle: TextStyle(
-                                     color:Colors.white
                                    ),
-                                     border: new UnderlineInputBorder(
-                                         borderSide: new BorderSide(
-                                             color: Colors.red
-                                         )
-                                     )
+                                   keyboardType: TextInputType.emailAddress,
+                                   validator: (val) {
+                                     if(val.isEmpty){
+                                      return 'Please Enter Email';
+                                     }
+                                   },
+                                   onSaved: (String value) {
+                                     _formData.email = value;
+                                   },
                                  ),
-                                 obscureText: true,
-                                 validator: (val) {
-                                   if(val.isEmpty){
-                                     return 'Please Enter Password';
-                                   }
-                                 },
-                                 onSaved: (String value) {
-                                   _formData.password = value;
-                                 },
-                                 keyboardType: TextInputType.text,
-                               ),
-                               new Padding(
-                                 padding: const EdgeInsets.only(top: 15.0),
-                               ),
-                               _buildSubmitButton(),
-                               _showForgotPasswordButton()
-                             ],
+                                 SizedBox(height: 10.0,),
+                                 new TextFormField(
+                                   style: TextStyle(
+                                     color: Colors.white,
+                                   ),
+                                   decoration: new InputDecoration(
+                                     labelText: "Enter Password",
+                                     fillColor: Colors.white,
+                                     labelStyle: TextStyle(
+                                       color:Colors.white
+                                     ),
+                                       border: new UnderlineInputBorder(
+                                           borderSide: new BorderSide(
+                                               color: Colors.red
+                                           )
+                                       )
+                                   ),
+                                   obscureText: true,
+                                   validator: (val) {
+                                     if(val.isEmpty){
+                                       return 'Please Enter Password';
+                                     }
+                                   },
+                                   onSaved: (String value) {
+                                     _formData.password = value;
+                                   },
+                                   keyboardType: TextInputType.text,
+                                 ),
+                                 new Padding(
+                                   padding: const EdgeInsets.only(top: 15.0),
+                                 ),
+                                 _buildSubmitButton(),
+                                 _showForgotPasswordButton()
+                               ],
+                             ),
                            ),
-                         ),
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

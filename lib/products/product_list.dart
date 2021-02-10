@@ -140,7 +140,7 @@ class _ProductListState extends State<ProductList> {
                               child: Text(model.shopCategory == 'Furniture' ||
                                   model.shopCategory == 'Cloths/Apparel' || model.shopCategory == 'Stationary' ||
                                   model.shopCategory == 'Materials' || model.shopCategory=='Electronics'
-                                  ? 'BIG SELL'
+                                  ? 'BIG Sale'
                                   : 'Special', style: TextStyle(
                                   color: _mode == ShopeMode.BigSell ? Colors
                                       .lightBlue : Colors.black26),),
@@ -162,7 +162,7 @@ class _ProductListState extends State<ProductList> {
                                     desiredItemWidth: MediaQuery
                                         .of(context)
                                         .size
-                                        .height > 700 ? 180 : 120,
+                                        .width > 370 ? 180 : 120,
                                     scroll: true,
                                     children: model.userProducts.map<Widget>((
                                         f) {
@@ -194,7 +194,7 @@ class _ProductListState extends State<ProductList> {
                                     desiredItemWidth: MediaQuery
                                         .of(context)
                                         .size
-                                        .height > 700 ? 180 : 120,
+                                        .width > 370 ? 180 : 120,
                                     scroll: true,
                                     children: model.specialProducts.map<
                                         Widget>((f) {

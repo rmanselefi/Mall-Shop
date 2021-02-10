@@ -62,7 +62,7 @@ class _ContactUsState extends State<ContactUs> {
                       height: 15.0,
                     ),
                     Center(
-                      child: Text('Malls ET is Created and Owned by Qemer Software Technology P.L.C',
+                      child: Text('Mall ET is Created and Owned by Qemer Software Technology P.L.C',
                         style: TextStyle(
                             fontSize: 16,
                         ),
@@ -118,7 +118,7 @@ class _ContactUsState extends State<ContactUs> {
                             IconButton(
                               icon: Icon(Icons.send,color: Color(0xff29b6f6).withOpacity(0.9),),
                               onPressed: (){
-                                const url = 'https://t.me/joinchat/AAAAAEgcJdx9SfD7belqCA';
+                                const url = 'https://t.me/MallEtClients';
                                 _launchURL(url);
                               },
                             ),

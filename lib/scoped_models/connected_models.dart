@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ConnectedModels extends Model{
   bool isLoading=true;
-  User authenticatedUser;
+  UserModel authenticatedUser;
   List<Product> userProducts=[];
   List<Product> specialProducts=[];
    Shop shop;
@@ -23,19 +23,19 @@ class ConnectedModels extends Model{
 
   Future<Shop> getAuthenticatedShop() async {
     try{
-      var docs = await Firestore.instance.collection('shop').getDocuments();
-      if (docs.documents.isNotEmpty) {
+      var docs = await FirebaseFirestore.instance.collection('shop').get();
+      if (docs.docs.isNotEmpty) {
         final SharedPreferences pref = await SharedPreferences.getInstance();
         if(pref.containsKey('user_id')) {
           final String userID = pref.getString('user_id');
           if(userID!=null) {
-            var doc = docs.documents
-                .where((sh) => sh.data['user_id'] == userID)
+            var doc = docs.docs
+                .where((sh) => sh.data()['user_id'] == userID)
                 .toList();
-            var data = doc[0].data;
+            var data = doc[0].data();
 
             shop = Shop(
-                Id: doc[0].documentID,
+                Id: doc[0].id,
                 shopName: data.containsKey('shop_name')
                     ? data['shop_name']
                     : '',
