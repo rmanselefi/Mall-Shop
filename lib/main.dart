@@ -3,20 +3,28 @@ import 'package:mallshop/products/products.dart';
 import 'package:mallshop/scoped_models/auth.dart';
 import 'package:mallshop/scoped_models/main.dart';
 import 'package:scoped_model/scoped_model.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 
 import 'package:mallshop/setting/ChangeBackground.dart';
 import 'package:mallshop/setting/ChangePassword.dart';
 import 'auth/SignIn.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MyHomePage(),
+    return ConnectivityAppWrapper(
+      app: MaterialApp(
+        home: MyHomePage(),
+      ),
     );
   }
 }

@@ -10,7 +10,7 @@ class AuthModel extends ConnectedModels {
     String errorMessage;
     try {
       isLoading = true;
-      FirebaseUser user = (await FirebaseAuth.instance
+      User user = (await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: email, password: password))
           .user;
 print('useruseruseruseruser $user');
@@ -21,7 +21,7 @@ print('useruseruseruseruser $user');
         hasError = false;
       }
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('token', token.token);
+      prefs.setString('token', token);
       prefs.setString('email', email);
       prefs.setString('user_id', id);
       prefs.setString('password', password);
@@ -61,7 +61,7 @@ print('useruseruseruseruser $user');
     final String token = pref.getString('token');
     final String user_id = pref.getString('user_id');
     if (token != null) {
-      authenticatedUser = User(token: token, Id: user_id);
+      authenticatedUser = UserModel(token: token, Id: user_id);
       notifyListeners();
       return authenticatedUser;
     }

@@ -120,7 +120,25 @@ class _ShopDetailTopState extends State<ShopDetailTop> {
                 }
                 return Container();
               });
-        } else {
+        }
+        if (model.uploadBackTask != null) {
+          return StreamBuilder<StorageTaskEvent>(
+              stream: model.uploadBackTask.events,
+              builder: (_, snapshot) {
+                if (model.uploadBackTask.isInProgress) {
+                  return Align(
+                      alignment: Alignment.topRight,
+                      child: Container(
+                        child: CircularProgressIndicator(),
+                      ));
+                } else if (model.uploadBackTask.isComplete) {
+                  return Container();
+                } else {
+                  return Container();
+                }
+              });
+        }
+        else {
           return Container();
         }
       }),

@@ -46,7 +46,7 @@ class _RemainingCreditState extends State<RemainingCredit> {
                   );
                 }
                 else {
-                  if (snap.data == null) {
+                  if (snap.data.shopCredit == '') {
                     return Center(
                       child: Text('No data to show'),
                     );
@@ -66,6 +66,15 @@ class _RemainingCreditState extends State<RemainingCredit> {
                         Container(
                           child: Text('Remaining time',style: TextStyle(color:Colors.grey),),
                         ),
+                        remaining<=0?
+                        Container(
+                          child: Center(
+                              child: Text(
+                                  'Your Account is about to expire please contact the adimistrator',
+                                  style: TextStyle(color: Colors.grey, fontSize: 18)
+                              ),
+                        ))
+                            :
                         Container(
                           child: Center(
                             child: RichText(
